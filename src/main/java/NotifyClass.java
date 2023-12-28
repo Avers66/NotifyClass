@@ -20,11 +20,11 @@ public class NotifyClass {
     public String removeElement() throws InterruptedException {
         synchronized (synchroList) {
             while (synchroList.isEmpty()) {
-                System.out.println(MessageFormat.format("Поток  {1}: список пуст, засыпаю {0}",Instant.now(), Thread.currentThread().getName()));
+                System.out.println(MessageFormat.format("Flow  {1}: is empty and waiting {0}",Instant.now(), Thread.currentThread().getName()));
                 synchroList.wait();
-                System.out.println(MessageFormat.format("Поток  {1}: список не пуст, проснулся {0}", Instant.now(), Thread.currentThread().getName()));
+                System.out.println(MessageFormat.format("Flow  {1}: is not empty and woke up {0}", Instant.now(), Thread.currentThread().getName()));
             }
-            System.out.println(MessageFormat.format("Поток  {1}: удаляю строку {0}", Instant.now(), Thread.currentThread().getName()));
+            System.out.println(MessageFormat.format("Flow  {1}: deleting an element {0}", Instant.now(), Thread.currentThread().getName()));
             return synchroList.remove(0);
         }
     }
@@ -33,7 +33,7 @@ public class NotifyClass {
         synchronized (synchroList) {
             synchroList.add(element);
             synchroList.notifyAll();
-            System.out.println(MessageFormat.format("Поток  {1}: добавил элемент {2} и всех разбудил {0}", Instant.now(), Thread.currentThread().getName(), element));
+            System.out.println(MessageFormat.format("Flow  {1}: added an element {2} and woke everyone up {0}", Instant.now(), Thread.currentThread().getName(), element));
         }
     }
 }
